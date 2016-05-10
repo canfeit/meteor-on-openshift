@@ -1,0 +1,37 @@
+#!/bin/bash
+
+NodeV=v0.12.14
+
+function _install_nodejs() {
+   mkdir -p "$OPENSHIFT_DATA_DIR/downloads"
+
+   echo "  - Downloading http://nodejs.org/dist/$NodeV/node-$NodeV-linux-x64.tar.gz ... "
+
+   if ! curl -L -o "$OPENSHIFT_DATA_DIR/downloads/node-$NodeV-linux-x64.tar.gz" "http://nodejs.org/dist/$NodeV/node-$NodeV-linux-x64.tar.gz"; then
+      echo "  - ERROR  -- download failed for http://nodejs.org/dist/$NodeV/node-$NodeV-linux-x64.tar.gz"
+      echo "  - download uri = $OPENSHIFT_DATA_DIR/downloads/node-$NodeV-linux-x64.tar.gz"
+      return 1
+   fi
+
+   (cd "$OPENSHIFT_DATA_DIR"; tar -zxf "$OPENSHIFT_DATA_DIR/downloads/node-$NodeV-linux-x64.tar.gz")
+   echo "  - Done installing Node.js version $NodeV"
+}
+
+function _ensure_symlinks() {
+   zdir="$HOME/.node_modules/.bin/"
+   if [ -d "$zdir" ]; then
+      ln -sf "$OPENSHIFT_DATA_DIR/node-$NodeV-linux-x64/bin/npm" "$zdir"
+      ln -sf "$OPENSHIFT_DATA_DIR/node-$NodeV-linux-x64/bin/node" "$zdir"
+   fi
+}
+
+echo "  - Checking to see if Node.js version $NodeV is installed ... "
+
+if [ -d  "$OPENSHIFT_DATA_DIR/node-$NodeV-linux-x64/bin" ]; then
+	echo "  - Node.js version $NodeV is already installed"
+else
+	_install_nodejs
+fi
+
+_ensure_symlinks
+
