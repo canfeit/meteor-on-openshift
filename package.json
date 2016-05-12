@@ -1,22 +1,24 @@
 {
-  "name": "OpenShift-Sample-App",
-  "version": "1.0.0",
-  "description": "OpenShift Sample Application",
+  "name": "Meteor-on-OpenShift",
+  "version": "0.0.1",
+  "description": "Meteor on OpenShift",
   "keywords": [
     "OpenShift",
     "Node.js",
     "application",
-    "openshift"
+    "Meteor"
   ],
-  "author": {
-    "name": "OpenShift",
-    "email": "ramr@example.org",
-    "url": "http://www.openshift.com/"
-  },
-  "homepage": "http://www.openshift.com/",
+  "author": [
+	  {
+		"name": "canfei",
+		"email": "canfeit@qq.com",
+		"url": "http://ww.kedo.so/"
+	  }
+  ],
+  "homepage": "http://www.kedo.so/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/openshift/origin-server"
+    "url": "https://github.com/canfeit/meteor-on-openshift"
   },
   "engines": {
     "node": ">= 0.10.41",
@@ -24,7 +26,7 @@
   },
   "private": true,
   "scripts": {
-    "install": "cd bundle/programs/server && npm install",
+	"install": "cd bundle/programs/server && npm install",
 	"start" : "node meteorshim.js"
   },
   "main": "meteorshim.js"

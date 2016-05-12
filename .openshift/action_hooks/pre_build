@@ -1,0 +1,43 @@
+#!/bin/bash
+
+source $OPENSHIFT_REPO_DIR/.openshift/lib/node_version
+
+function _install_nodejs() {
+   mkdir -p "$OPENSHIFT_DATA_DIR/downloads"
+   echo "  - Downloading http://nodejs.org/dist/$NodeV/node-$NodeV-linux-x64.tar.gz ... "
+   if ! curl -L -o "$OPENSHIFT_DATA_DIR/downloads/node-$NodeV-linux-x64.tar.gz" "http://nodejs.org/dist/$NodeV/node-$NodeV-linux-x64.tar.gz"; then
+      echo "  - ERROR  -- download failed for http://nodejs.org/dist/$NodeV/node-$NodeV-linux-x64.tar.gz"
+      echo "  - download uri = $OPENSHIFT_DATA_DIR/downloads/node-$NodeV-linux-x64.tar.gz"
+      return 1
+   fi
+   (cd "$OPENSHIFT_DATA_DIR"; tar -zxf "$OPENSHIFT_DATA_DIR/downloads/node-$NodeV-linux-x64.tar.gz")
+   echo "  - Done installing Node.js version $NodeV"
+}
+
+echo "  - Checking to see if Node.js version $NodeV is installed ... "
+if [ -d  "$OPENSHIFT_DATA_DIR/node-$NodeV-linux-x64/bin" ]; then
+	echo "  - Node.js version $NodeV is already installed"
+else
+	_install_nodejs
+fi
+
+#node -v
+if [ -d "$HOME/.node_modules/.bin/" ]; then
+	ln -sf "$OPENSHIFT_DATA_DIR/node-$NodeV-linux-x64/bin/npm" "$HOME/.node_modules/.bin/"
+	ln -sf "$OPENSHIFT_DATA_DIR/node-$NodeV-linux-x64/bin/node" "$HOME/.node_modules/.bin/"
+fi
+echo "#####################################################"
+echo "Installed Node: "
+node -v
+echo "#####################################################"
+
+#process.version
+if ! egrep '^\s*function\s+nodejs_context' "$OPENSHIFT_HOMEDIR/nodejs/configuration/node.env" > /dev/null 2>&1; then
+     echo -e "function nodejs_context() { bash -c \"\$@\"; }\n" >> "$OPENSHIFT_HOMEDIR/nodejs/configuration/node.env" || :
+fi
+
+#  We need to move the package.json file out of the way in pre_build, so
+#  that the OpenShift git post-receive hook doesn't try and use the old
+#  npm version to install the dependencies.
+[ -d "$OPENSHIFT_DATA_DIR/.nodejs.tmp" ]  ||  mkdir -p "$OPENSHIFT_DATA_DIR/.nodejs.tmp"
+mv  "${OPENSHIFT_REPO_DIR}/package.json"  "$OPENSHIFT_DATA_DIR/.nodejs.tmp"
