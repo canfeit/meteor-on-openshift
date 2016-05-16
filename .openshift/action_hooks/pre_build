@@ -14,6 +14,14 @@ function _install_nodejs() {
    echo "  - Done installing Node.js version $NodeV"
 }
 
+if [ -d  "${OPENSHIFT_REPO_DIR}/bundle.zip" ]; then
+  unzip "${OPENSHIFT_REPO_DIR}/bundle.zip"
+fi
+
+if [ -d  "${OPENSHIFT_REPO_DIR}/bundle.tar.gz" ]; then
+  tar -zxf "${OPENSHIFT_REPO_DIR}/bundle.tar.gz"
+fi
+
 echo "  - Checking to see if Node.js version $NodeV is installed ... "
 if [ -d  "$OPENSHIFT_DATA_DIR/node-$NodeV-linux-x64/bin" ]; then
 	echo "  - Node.js version $NodeV is already installed"
