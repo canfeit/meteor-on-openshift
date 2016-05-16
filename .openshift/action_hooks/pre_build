@@ -42,4 +42,4 @@ fi
 [ -d "$OPENSHIFT_DATA_DIR/.nodejs.tmp" ]  ||  mkdir -p "$OPENSHIFT_DATA_DIR/.nodejs.tmp"
 mv  "${OPENSHIFT_REPO_DIR}/package.json"  "$OPENSHIFT_DATA_DIR/.nodejs.tmp"
 
-(cd "$OPENSHIFT_REPO_DIR"; tar -zxf $OPENSHIFT_REPO_DIR/*.tar.gz)
+(cd "$OPENSHIFT_REPO_DIR"; tar -zxf {$OPENSHIFT_REPO_DIR}bundle.tar.gz)
