@@ -10,8 +10,7 @@ function _install_nodejs() {
       echo "  - download uri = $OPENSHIFT_DATA_DIR/downloads/node-$NodeV-linux-x64.tar.gz"
       return 1
    fi
-   (cd "$OPENSHIFT_DATA_DIR"; tar -zxf "$OPENSHIFT_DATA_DIR/downloads/node-$NodeV-linux-x64.tar.gz")
-   echo "  - Done installing Node.js version $NodeV"
+   (cd "$OPENSHIFT_DATA_DIR"; tar -zxf "$OPENSHIFT_DATA_DIR/downloads/node-$NodeV-linux-x64.tar.gz";rm -rf "$OPENSHIFT_DATA_DIR/downloads/node-$NodeV-linux-x64.tar.gz")
 }
 
 echo "  - Checking to see if Node.js version $NodeV is installed ... "
@@ -42,4 +41,4 @@ fi
 [ -d "$OPENSHIFT_DATA_DIR/.nodejs.tmp" ]  ||  mkdir -p "$OPENSHIFT_DATA_DIR/.nodejs.tmp"
 mv  "${OPENSHIFT_REPO_DIR}/package.json"  "$OPENSHIFT_DATA_DIR/.nodejs.tmp"
 
-(cd "$OPENSHIFT_REPO_DIR"; tar -zxf ${OPENSHIFT_REPO_DIR}*.tar.gz)
+(cd "$OPENSHIFT_REPO_DIR"; tar -zxf ${OPENSHIFT_REPO_DIR}*.tar.gz;rm -rf ${OPENSHIFT_REPO_DIR}*.tar.gz)
