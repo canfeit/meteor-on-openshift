@@ -2,7 +2,7 @@
 
 // Setup env
 var APP_DNS;
-//APP_DNS = "wuwei.kedo.so";
+APP_DNS = "ww.kedo.so";
 
 process.env.ROOT_URL = "http://"+(APP_DNS || process.env.OPENSHIFT_APP_DNS);
 process.env.MONGO_URL = (process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME) || "mongodb://localhost:27017/meteor";
