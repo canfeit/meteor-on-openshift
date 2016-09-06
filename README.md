@@ -1,5 +1,4 @@
 # meteor-on-openshift
-meteor-on-openshift
 
 ## 使用说明
 
