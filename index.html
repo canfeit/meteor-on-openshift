@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Meteor-on-openshift by canfeit</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Meteor-on-openshift</h1>
+        <h2>meteor-on-openshift</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/canfeit/meteor-on-openshift/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/canfeit/meteor-on-openshift/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/canfeit/meteor-on-openshift" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a id="meteor-on-openshift" class="anchor" href="#meteor-on-openshift" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>meteor-on-openshift</h1>
+
+<h2>
+<a id="使用说明" class="anchor" href="#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用说明</h2>
+
+<p>1.打包你的meteor应用到你的openshift仓库根目录</p>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-c1">cd</span> your_meteor_application_dir
+meteor build your_openshift_repo_dir --architecture os.linux.x86_64 --server-only</pre></div>
+
+<p>2.将本项目并入你的openshift仓库</p>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-c1">cd</span> your_openshift_repo_dir
+git remote add upstream -m master git://github.com/canfeit/meteor-on-openshift.git
+git pull -s recursive -X theirs upstream master</pre></div>
+
+<p>3.在meteorshim.js中设置你自己的APP_DNS值</p>
+
+<p>4.发布到openshift</p>
+
+<div class="highlight highlight-source-shell"><pre>git add <span class="pl-c1">.</span> 
+git update-index --chmod=+x .openshift/action_hooks/build
+git update-index --chmod=+x .openshift/action_hooks/pre_build
+git add <span class="pl-c1">.</span> <span class="pl-k">&amp;&amp;</span> git commit -m <span class="pl-s"><span class="pl-pds">'</span>u<span class="pl-pds">'</span></span> <span class="pl-k">&amp;&amp;</span> git push</pre></div>
+
+<p>5.等待你的openshift服务重启完成</p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
