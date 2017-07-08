@@ -1,5 +1,7 @@
 # meteor-on-openshift
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/canfeit/meteor-on-openshift.svg)](https://greenkeeper.io/)
+
 ## 使用说明
 
 1.打包你的meteor应用到你的openshift仓库根目录
